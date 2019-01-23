@@ -11,35 +11,32 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import './App.css';
 
-class App extends Component {
+export default class App extends Component {
   state = Object.assign({
       newTask: '',
-      tasks: [],
+      tasks: []
   }, this.props.initialState);
 
   componentWillUpdate = this.props.onState || undefined;
 
   handleChange = key => event => {
-    this.setState({
-      [key]: event.target.value,
-    });
+    this.setState({ [key]: event.target.value });
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    const newArr = this.state.tasks;
-    newArr.push({name: this.state.newTask});
-    this.setState({
-      tasks: newArr,
-      newTask: '',
-    });
+    const newTasks = [
+      ...this.state.tasks,
+      { name: this.state.newTask }
+    ];
+    this.setState({ tasks: newTasks, newTask: '' });
   };
 
   deleteItem = index => event => {
-    const newArr = this.state.tasks;
-    newArr.splice(index, 1);
+    const newTasks = [...this.state.tasks];
+    newTasks.splice(index, 1);
     this.setState({
-      tasks: newArr,
+      tasks: newTasks,
     });
   };
 
@@ -56,8 +53,8 @@ class App extends Component {
             value={this.state.newTask}
             onChange={this.handleChange('newTask')}
           />
-          <Button type="submit" aria-label="Add" variant="fab" color="primary">
-            <AddIcon />
+          <Button type="submit" aria-label="Add" color="primary">
+            <AddIcon /> Add
           </Button>
         </form>
         <Grid container spacing={16}>
@@ -87,5 +84,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;

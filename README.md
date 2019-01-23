@@ -1,21 +1,31 @@
 # TODO
 
-Todo is a simple little app. It's based on create-react-app and material-ui.
+Todo is a little app. It's based on create-react-app and material-ui.
 
 ## Setup
 
-To run this project you must have [Node.js](https://nodejs.org/en/download/) and [Yarn](https://yarnpkg.com/lang/en/docs/install) installed.
+To run this project you must have Node.js and NPM installed.
 
 To get started, run these commands:
 
 ```
-yarn
-yarn test
+npm ci
+npm start
+npm test
 ```
 
-You should see three failing tests. Your first job is to get these three tests passing!
+## The Task
+
+You should see three failing tests, your job is the following:
+
+1. Get those tests passing by implementing features described below
+2. Improve any code you think could use some love
+3. GIT commit each step
+4. Stop after 30 minutes
 
 Remember, we'd much rather see an incomplete response than nothing at all. Wherever you get to in the time limit, commit and push it.
+
+Good luck!
 
 ## Feature One
 
