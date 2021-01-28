@@ -1,26 +1,21 @@
 import produce from 'immer';
+import {nanoid} from 'nanoid';
 import {Reducer} from 'react';
 
-// @ts-ignore
-export type Todo = Omit<ListTodosQuery['listTodos']['items'][0], '__typename' | 'todoList'>
+export interface Todo {
+	name: string,
+	id: string,
+}
 
 type State = {
 	todos: Todo[]
-	currentName: string
+	currentName: string,
 }
 
 export type Action =
-	| {
-			type: 'add-todo'
-			payload: Todo
-		}
-	| {
-			type: 'delete-todo'
-			payload: string
-		}
-	| {
-			type: 'reset-current'
-		}
+	| { type: 'add-todo'; payload: Todo }
+	| { type: 'delete-todo'; payload: string }
+	| { type: 'reset-current' }
 	| { type: 'set-current'; payload: string }
 
 const todoReducer: Reducer<State, Action> = (state, action) => {
@@ -37,7 +32,6 @@ const todoReducer: Reducer<State, Action> = (state, action) => {
 				draft.todos.splice(index, 1)
 			})
 		}
-		// comment
 		case 'reset-current': {
 			return produce(state, (draft) => {
 				draft.currentName = ''

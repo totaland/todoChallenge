@@ -58,7 +58,7 @@ function Task(props: Props) {
 							<Button type="submit" colorScheme="teal" size="sm">Create Todo</Button>
 						</HStack>
 					</form>
-					{state.todos.map((todo, index) => (
+					{state.todos.length > 0 ? state.todos.map((todo, index) => (
 						<List spacing={3} my={0} key={index}>
 							<ListItem>
 								<HStack spacing={'24px'} justify="left">
@@ -79,7 +79,8 @@ function Task(props: Props) {
 								</HStack>
 							</ListItem>
 						</List>
-					))}
+					))
+					: null}
 				</Main>
 
 				<DarkModeSwitch />

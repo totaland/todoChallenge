@@ -4,9 +4,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const store = (_: any, state: []) => {
+  window.localStorage.state = JSON.stringify(state);
+}
+
+const retrieve = () => {
+  try {
+    return JSON.parse(window.localStorage.state);
+  } catch (e) {
+    return {};
+  }
+}
+
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App
+      initialState={retrieve()}
+      onState={store}
+    />
   </React.StrictMode>,
   document.getElementById('root')
 );
