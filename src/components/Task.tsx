@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, {useEffect, useReducer} from 'react';
 import createToDo from '../services/createTodo';
 import todoReducer, {Todo} from '../components/todoReducer';
 import deleteToDo from '../services/deleteTodo';
@@ -22,14 +22,20 @@ import { CTA } from './CTA'
 import { Footer } from './Footer'
 
 type Props = {
-	todos: Todo[]
+	initialState: Todo[],
+	onState: any
 }
 
-function Task(props: Props) {
+function Task({initialState, onState}: Props) {
 	const [state, dispatch] = useReducer(todoReducer, {
-		todos: props.todos,
+		todos: initialState,
 		currentName: '',
+		currentPoint: 1
 	})
+
+	useEffect(() => {
+		return onState
+	}, [])
 
 	return (
 		<div>
@@ -43,14 +49,22 @@ function Task(props: Props) {
 					<form
 						onSubmit={(ev) => {
 							ev.preventDefault()
-							createToDo(dispatch, state.currentName)
+							createToDo(dispatch, state.currentName, state.currentPoint)
 						}}
 					>
 						<HStack spacing={4} justify="left">
 							<Input
-								value={state.currentName}
 								onChange={(e) => {
-									dispatch({ type: 'set-current', payload: e.target.value })
+									const lastValue = /\s(\w+)$/gm.exec(e.target.value);
+									if(lastValue !== null) {
+										const lastWord = lastValue[1]
+										const point = /\d+/g.exec(lastWord)
+										const currentP = Number(point)
+										dispatch({ type: 'set-currentPoint', payload: currentP })
+									}
+									const sentence = e.target.value
+									let newStr=sentence.replace(/\S+$/,'')
+									dispatch({ type: 'set-current', payload: newStr })
 								}}
 								placeholder="Add todo"
 								size="sm"
@@ -65,7 +79,8 @@ function Task(props: Props) {
 									<Box>
 										<ListIcon as={CheckCircleIcon} color="green.500" />
 											{todo.name}
-										{' '}
+											{' '}
+											{todo.point}
 										<LinkIcon />
 									</Box>
 									<Button

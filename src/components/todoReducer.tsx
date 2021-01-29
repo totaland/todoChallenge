@@ -5,11 +5,13 @@ import {Reducer} from 'react';
 export interface Todo {
 	name: string,
 	id: string,
+	point: number,
 }
 
-type State = {
-	todos: Todo[]
+interface State {
+	todos: Todo [],
 	currentName: string,
+	currentPoint: number
 }
 
 export type Action =
@@ -17,11 +19,15 @@ export type Action =
 	| { type: 'delete-todo'; payload: string }
 	| { type: 'reset-current' }
 	| { type: 'set-current'; payload: string }
+	| { type: 'set-currentPoint'; payload: number }
 
 const todoReducer: Reducer<State, Action> = (state, action) => {
 	switch (action.type) {
 		case 'add-todo': {
 			return produce(state, (draft) => {
+
+				console.log(`########todos: ${JSON.stringify(draft.todos)}`)
+				console.log(`########state: ${JSON.stringify(state)}`)
 				draft.todos.push(action.payload)
 			})
 		}
@@ -35,6 +41,11 @@ const todoReducer: Reducer<State, Action> = (state, action) => {
 		case 'reset-current': {
 			return produce(state, (draft) => {
 				draft.currentName = ''
+			})
+		}
+		case 'set-currentPoint': {
+			return produce(state, (draft) => {
+				draft.currentPoint = action.payload
 			})
 		}
 		case 'set-current': {

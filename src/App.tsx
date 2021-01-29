@@ -9,11 +9,11 @@ interface Props {
   initialState: Todo[],
   onState: (_: any, state: []) => void
 }
-function App({initialState}: Props) {
+function App({initialState, onState}: Props) {
   return (
     <ChakraProvider resetCSS theme={theme}>
     <div className="App">
-      <Task todos={initialState} />
+      <Task initialState={initialState} onState={onState}/>
     </div>
     </ChakraProvider>
   );
